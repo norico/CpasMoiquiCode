@@ -1,4 +1,8 @@
 <?php 
+if (!defined('ABSPATH')) {
+    exit; // Sortie si le fichier est accédé directement
+}
+
 require_once get_template_directory() . '/inc/Loader.php';
 require_once get_template_directory() . '/inc/Theme-setup.php';
 require_once get_template_directory() . '/inc/Theme-switch.php';
