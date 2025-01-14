@@ -1,4 +1,7 @@
 <?php 
+if (!defined('ABSPATH')) {
+    exit; // Sortie si le fichier est accédé directement
+}
 
 class ThemeSwitch {
     private int     $posts_per_page;

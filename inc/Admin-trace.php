@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Sortie si le fichier est accédé directement
+}
 
 class AdminTrace {
     private string $meta_key = 'last_login';
