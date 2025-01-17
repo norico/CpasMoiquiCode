@@ -82,10 +82,8 @@ class Theme {
         $this->loader->add_action('after_switch_theme', $this->theme_switch, 'after_switch_theme');
         $this->loader->add_action('init', $this, 'init');
         $this->loader->add_action('wp_head', $this, 'wp_head');
-
         $this->loader->add_action('wp_enqueue_scripts', $this->theme_setup, 'wp_enqueue_scripts');
         
-
         // Ajouter le filtre pour retirer le sélecteur de langues
         $this->loader->add_filter('login_display_language_dropdown', $this->login, 'login_display_language_dropdown');
         
@@ -99,7 +97,11 @@ class Theme {
         $this->loader->add_action('manage_posts_custom_column', $this->admin, 'display_thumbnail_column', 10, 2);
         
         // Actions et filtres pour AdminTrace
+        // Ne fonctionne pas en multisite il faut passer par un plugin et ajouter une clé dans les options
+        // du multisite afin de pouvoir logger les connexions des utilisateurs quelque soit le theme utilisé
         $this->loader->add_action('wp_login', $this->admin_trace, 'update_last_login', 10, 2);
+
+        // Actions et filtres pour AdminTrace
         $this->loader->add_filter('manage_users_columns', $this->admin_trace, 'add_last_login_column');
         $this->loader->add_filter('manage_users_custom_column', $this->admin_trace, 'show_last_login_column', 10, 3);
         $this->loader->add_filter('manage_users_sortable_columns', $this->admin_trace, 'make_last_login_sortable');
@@ -114,6 +116,7 @@ class Theme {
 
     public function wp_head() {
         $this->theme_meta->meta_og();
+        // Only for development
         echo '<script src="https://cdn.tailwindcss.com"></script>';
     }
 }
