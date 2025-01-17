@@ -82,6 +82,8 @@ class Theme {
         $this->loader->add_action('after_switch_theme', $this->theme_switch, 'after_switch_theme');
         $this->loader->add_action('init', $this, 'init');
         $this->loader->add_action('wp_head', $this, 'wp_head');
+
+        $this->loader->add_action('wp_enqueue_scripts', $this->theme_setup, 'wp_enqueue_scripts');
         
 
         // Ajouter le filtre pour retirer le sélecteur de langues
@@ -112,6 +114,7 @@ class Theme {
 
     public function wp_head() {
         $this->theme_meta->meta_og();
+        echo '<script src="https://cdn.tailwindcss.com"></script>';
     }
 }
 

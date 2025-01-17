@@ -35,4 +35,8 @@ class ThemeSetup {
         // Désactiver l'éditeur de fichiers de thèmes
         define('DISALLOW_FILE_EDIT', true);
     }
+
+    public function wp_enqueue_scripts() {
+        wp_enqueue_style('intranet-style', get_template_directory_uri() . '/style.css');
+    }
 }
