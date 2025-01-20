@@ -9,6 +9,13 @@ class Route {
         $this->init_routes();
     }
 
+    public function register_routes() {
+        register_rest_route('intranet/v1', '/post/(?P<id>\\d+)', [
+            'methods' => 'GET',
+            'callback' => [$this, 'get_post_data'],
+        ]);
+    }
+
 
     public function init_routes() {
         $this->routes[] = [
@@ -61,11 +68,5 @@ class Route {
     }
 }
 
-$route = new Route();
 
-add_action('rest_api_init', function () use ($route) {
-    register_rest_route('intranet/v1', '/post/(?P<id>\\d+)', [
-        'methods' => 'GET',
-        'callback' => [$route, 'get_post_data'],
-    ]);
-});
+

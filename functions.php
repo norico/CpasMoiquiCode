@@ -115,6 +115,11 @@ class Theme {
         $this->loader->add_action('pre_get_users', $this->admin_trace, 'sort_by_last_login');
         $this->loader->add_action('init', $this->route, 'init_routes');
 
+        $this->loader->add_action('rest_api_init', $this->route, 'register_routes');
+
+
+
+
         $this->loader->add_action('admin_menu', $this->alerte, 'ajouter_menu_alerte');
         $this->loader->add_action('alert_message', $this->alerte, 'afficher_alerte');
         
