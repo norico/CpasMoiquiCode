@@ -9,3 +9,20 @@ Text Domain: intranet
 Domain Path: /languages
 */
 
+.flash-animation {
+    animation: flash-delay 10s ease-in-out 1.7s infinite;
+    background: linear-gradient(90deg, #0000 0, orange 58.19%, #0000 100%);
+
+}
+
+@keyframes flash-delay {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 200%;
+    }
+    100% {
+        left: 200%;
+    }
+}

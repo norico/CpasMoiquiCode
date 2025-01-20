@@ -8,6 +8,10 @@ if (has_action('front_posts') && is_front_page() ) {
 }
 ?>
 
+
+<?php do_action('alert_message'); ?>
+
+
 <?php if ( have_posts() ) : ?>
     <?php while ( have_posts() ) : the_post(); ?>
         <h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>

@@ -11,6 +11,8 @@ require_once get_template_directory() . '/inc/Admin.php';
 require_once get_template_directory() . '/inc/Admin-trace.php';
 require_once get_template_directory() . '/inc/Admin-metabox.php';
 require_once get_template_directory() . '/inc/Login.php';
+require_once get_template_directory() . '/inc/Route.php';
+require_once get_template_directory() . '/inc/Alerte.php';
 
 class Theme {
 
@@ -28,10 +30,11 @@ class Theme {
     private ThemeSwitch $theme_switch;
     private ThemeMeta $theme_meta;
     private Login $login;
-
+    private Route $route;
     private Admin $admin;
     private AdminTrace $admin_trace;
     private AdminMetabox $admin_metabox;
+    private Alerte $alerte;
 
     private $menus = array(
         'primary'   => 'Menu Principal',
@@ -39,6 +42,7 @@ class Theme {
     );
 
     private $loader;
+    
 
     public function __construct() {
         $theme = wp_get_theme();
@@ -46,6 +50,8 @@ class Theme {
         $this->theme_slug       = $theme->get('TextDomain');
         $this->theme_version    = $theme->get('Version');
         
+        $this->route            = new Route();
+
         $this->admin            = new Admin();
         $this->admin_trace      = new AdminTrace();
         $this->admin_metabox    = new AdminMetabox();
@@ -62,6 +68,7 @@ class Theme {
         $this->admin_trace      = new AdminTrace();
         $this->loader           = new Loader();
         $this->login            = new Login();
+        $this->alerte			= new Alerte();
         $this->setup();
     }
 
@@ -80,7 +87,7 @@ class Theme {
     private function setup() {
         $this->loader->add_action('after_setup_theme', $this->theme_setup, 'after_setup_theme');
         $this->loader->add_action('after_switch_theme', $this->theme_switch, 'after_switch_theme');
-        $this->loader->add_action('init', $this, 'init');
+        $this->loader->add_action('init', $this, 'init_nav_menus');
         $this->loader->add_action('wp_head', $this, 'wp_head');
         $this->loader->add_action('wp_enqueue_scripts', $this->theme_setup, 'wp_enqueue_scripts');
         
@@ -106,12 +113,19 @@ class Theme {
         $this->loader->add_filter('manage_users_custom_column', $this->admin_trace, 'show_last_login_column', 10, 3);
         $this->loader->add_filter('manage_users_sortable_columns', $this->admin_trace, 'make_last_login_sortable');
         $this->loader->add_action('pre_get_users', $this->admin_trace, 'sort_by_last_login');
+        $this->loader->add_action('init', $this->route, 'init_routes');
+
+        $this->loader->add_action('admin_menu', $this->alerte, 'ajouter_menu_alerte');
+        $this->loader->add_action('alert_message', $this->alerte, 'afficher_alerte');
+        
+
     }
 
 
 
-    public function init() {
+    public function init_nav_menus() {
         register_nav_menus($this->menus);
+        
     }
 
     public function wp_head() {
@@ -132,3 +146,6 @@ if (class_exists('Theme')) {
 } else {
     wp_die('La classe Theme n\'existe pas. Veuillez vérifier votre installation.');
 }
+
+// Initialiser la classe Alerte
+new Alerte();
