@@ -28,12 +28,25 @@ class ThemeSetup {
 
         add_theme_support('custom-menu');
         add_theme_support('customize-selective-refresh-widgets');
+        add_theme_support('block-patterns');
+        add_theme_support('block-pattern-directory');
         add_theme_support('wp-block-styles');
         add_theme_support('align-wide');
         add_theme_support('responsive-embeds');
 
         // Désactiver l'éditeur de fichiers de thèmes
         define('DISALLOW_FILE_EDIT', true);
+
+        // Enregistrer le dossier des patterns personnalisés
+        register_block_pattern_category(
+            'Intranet', 
+            array(
+                'label'       => _x( 'Intranet', 'Block pattern category', 'intranet' ),
+                'description' => __( 'A collection of full page layouts.', 'intranet' ),
+                'icon'        => 'layout',
+                'slug'        => 'intranet'
+            )
+        );
     }
 
     public function wp_enqueue_scripts() {

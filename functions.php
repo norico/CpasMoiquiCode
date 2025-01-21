@@ -4,15 +4,15 @@ if (!defined('ABSPATH')) {
 }
 
 require_once get_template_directory() . '/inc/Loader.php';
-require_once get_template_directory() . '/inc/Theme-setup.php';
 require_once get_template_directory() . '/inc/Theme-switch.php';
 require_once get_template_directory() . '/inc/Theme-meta.php';
+require_once get_template_directory() . '/inc/Theme-setup.php';
+require_once get_template_directory() . '/inc/Route.php';
+require_once get_template_directory() . '/inc/Alerte.php';
+require_once get_template_directory() . '/inc/Login.php';
 require_once get_template_directory() . '/inc/Admin.php';
 require_once get_template_directory() . '/inc/Admin-trace.php';
 require_once get_template_directory() . '/inc/Admin-metabox.php';
-require_once get_template_directory() . '/inc/Login.php';
-require_once get_template_directory() . '/inc/Route.php';
-require_once get_template_directory() . '/inc/Alerte.php';
 
 class Theme {
 
@@ -117,13 +117,8 @@ class Theme {
 
         $this->loader->add_action('rest_api_init', $this->route, 'register_routes');
 
-
-
-
         $this->loader->add_action('admin_menu', $this->alerte, 'ajouter_menu_alerte');
         $this->loader->add_action('alert_message', $this->alerte, 'afficher_alerte');
-        
-
     }
 
 
